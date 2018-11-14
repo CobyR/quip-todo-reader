@@ -41,3 +41,19 @@ SELF - this value I use to parse out of document names, it is a comma separated 
 ACTIONS - a comma separated list, if you inconsistently title your Action Items, or Outstanading Actions section
 
 NEXT - a comma separated list, if you inconsistently title your Next Time section
+
+## Sample output - not colorized
+```
+$ ruby list.rb
+There are 2 items in your 'One on Ones' Folder.
+Coby / Aaron 1:1 Notes - November 13, 2018 @ 19:51 -0800 - Aaron - 1, 1 - https://confreaks.quip.com/GjOMAbs75E5U
+	Commitments
+		find open source gig
+	Next Time
+		SEA-TAC Airport YouTube Facebook aka “choo choo”
+Coby / Karen 1:1 Notes - November 13, 2018 @ 19:48 -0800 - Karen - 1, 1 - https://confreaks.quip.com/RxfTAufodN6r
+	Commitments
+		Coby - Investigate and report back on the cause of solar flares
+	Next Time
+		How the world turns
+```

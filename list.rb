@@ -92,8 +92,8 @@ else
         print document.link.blue
         print "\n"
         if document.actions.count > 0  && document.actions.first.length > 0
+           print "\tCommitments\n".red
           document.actions.each do |action|
-            print "\tCommitments\n".red
             print "\t\t#{action.red}\n"
           end
         end

@@ -1,0 +1,34 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.8)
+    colorize (0.8.1)
+    dotenv (2.5.0)
+    json (1.8.6)
+    mime-types (1.25.1)
+    mini_portile2 (2.3.0)
+    nokogiri (1.8.5)
+      mini_portile2 (~> 2.3.0)
+    quip (0.1.0)
+      unirest
+    rest-client (1.6.9)
+      mime-types (~> 1.16)
+    unirest (1.1.2)
+      addressable (~> 2.3.5)
+      json (~> 1.8.1)
+      rest-client (~> 1.6.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorize
+  dotenv
+  nokogiri
+  quip
+
+RUBY VERSION
+   ruby 2.5.1p57
+
+BUNDLED WITH
+   1.16.5

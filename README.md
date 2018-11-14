@@ -27,6 +27,17 @@ This is a simple ruby script written with several Gems and no real engineering d
 ## Setup
 1. Clone repo
 2. copy .env.sample to .env and update accordingly
+3. bundle install
 3. ruby list.rb
 
+### values for the .env file
 
+QUIP_TOKEN - you can get this by visiting quip.com/dev/token while logged into your quip account.
+
+FOLDER_ID - this is the ID portion of the URL for the quip folder you want to read documents from.  You can navigate to your folder and then copy the portion of the URL after the final slash to get this value.
+
+SELF - this value I use to parse out of document names, it is a comma separated list but I use it so when the document is output to the screen it doesn't contain my name repeated in every file, I include my name as a curteousy to those I share the document with.
+
+ACTIONS - a comma separated list, if you inconsistently title your Action Items, or Outstanading Actions section
+
+NEXT - a comma separated list, if you inconsistently title your Next Time section

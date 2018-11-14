@@ -5,22 +5,23 @@ require 'colorize'
 require 'nokogiri'
 require File.join(File.dirname(__FILE__), 'lib/quip.rb')
 
+# Load .env file
 Dotenv.load File.join(File.dirname(__FILE__),".env")
 
+# populate values from .env variables
 selves = ENV['SELF'].split(",")
 @action_headers = ENV['ACTIONS'].split(",")
 @next_headers = ENV['NEXT'].split(",")
 
-
-
 client = Quip::QuipClient.new(access_token: ENV['QUIP_TOKEN'])
 user = client.get_authenticated_user()
-one_on_one_folder = client.get_folder(ENV['ONE_ON_ONE_FOLDER_ID'])
+folder = client.get_folder(ENV['FOLDER_ID'])
 
-if one_on_one_folder['error_code']
-  puts "#{one_on_one_folder['error_description']}"
+if folder['error_code']
+  puts "#{folder['error_description']}"
 else
-  puts "There are #{one_on_one_folder['children'].length} items in your One on One Folder."
+
+  puts "There are #{folder['children'].length} items in your '#{folder['folder']['title'].yellow}' Folder."
 
   x = 0
 
@@ -37,9 +38,11 @@ else
              :nexts,
              :link)
 
-  one_on_one_folder['children'].each do |child|
+  folder['children'].each do |child|
     x += 1
+
     doc = client.get_thread(child['thread_id'])
+
     if doc['thread']
 
       document = Struct::Document.new
@@ -51,7 +54,7 @@ else
       document.type = doc['thread']['type']
       document.body = doc['html']
       document.link = doc['thread']['link']
-      
+
       document.who = document.title.
                        gsub("Level","").
                        gsub("level","").
@@ -62,8 +65,10 @@ else
                        gsub("-","").
                        chomp
 
-      ENV['SELF'].split(",").each do |n|
-        document.who.gsub!(n,"")
+      ENV['SELF'].split(",").each do |self_name|
+        self_name.rstrip!
+        self_name.lstrip!
+        document.who.gsub!(self_name,"")
       end
 
       document.who.lstrip!
@@ -72,7 +77,7 @@ else
       # Actions
       populate_actions document
 
-      # populate_nexts document
+      populate_nexts document
 
       #print "#{document.id.yellow} - #{document.type.red} - "
       if document.actions.count > 0 || document.nexts.count > 0
@@ -88,17 +93,18 @@ else
         print "\n"
         if document.actions.count > 0  && document.actions.first.length > 0
           document.actions.each do |action|
-            print "\t#{action.yellow}\n"
+            print "\tCommitments\n".red
+            print "\t\t#{action.red}\n"
           end
         end
         if document.nexts.count > 0
-          print "Next Time\n".light_blue
+          print "\tNext Time\n".light_blue
           document.nexts.each do |item|
-            print "\t#{item.light_blue}\n"
+            print "\t\t#{item.light_blue}\n"
           end
         end
       end
-      
+
       documents << document
       if x == 2
         # puts doc
